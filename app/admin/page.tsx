@@ -331,7 +331,7 @@ export default function AdminDashboard() {
         <div className="flex flex-col md:flex-row gap-8">
           {/* Sidebar - Page Navigation */}
           <aside className="md:w-64 shrink-0">
-            <div className="sticky top-24">
+            <div className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto overflow-x-hidden pr-1 -mr-1">
               {userRole === "WIJSNEUZEN" && (
                 <>
               <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
