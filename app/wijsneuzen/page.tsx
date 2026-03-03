@@ -3,37 +3,27 @@ import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from "next/link"
-import { Users, Mail, MapPin, ExternalLink } from "lucide-react"
+import Image from "next/image"
+import { Users } from "lucide-react"
 import { getPageContents } from "@/lib/page-content"
-
-const teamMembers = [
-  {
-    name: "Bram Janssen",
-    role: "Project Lead",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80",
-  },
-  {
-    name: "Anouska de Vries",
-    role: "Chief Historian",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&q=80",
-  },
-  {
-    name: "Marc Sanders",
-    role: "Visual Designer",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80",
-  },
-  {
-    name: "Sofie Peeters",
-    role: "Local Liaison",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&q=80",
-  },
-]
 
 export default async function WijsneuzenPage() {
   const content = await getPageContents("wijsneuzen")
   const hero = content["hero"] || { title: "Project Philippine", content: "" }
   const story = content["our-story"] || { title: "Our Story", content: "" }
   const contact = content["contact"] || { title: "De Wijsneuzen", content: "" }
+  const team = content["team"] || { title: "De Wijsneuzen", content: "" }
+
+  const teamMembers =
+    team.content
+      ?.split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0)
+      .map((line) => {
+        const [name, role] = line.split("|").map((part) => part.trim())
+        return { name, role }
+      })
+      .filter((member) => member.name && member.role) ?? []
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -82,12 +72,23 @@ export default async function WijsneuzenPage() {
         {/* Team Section */}
         <section className="py-16 md:py-24 bg-secondary/30">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
+            <div className="text-center mb-10">
               <div className="flex items-center justify-center gap-2 mb-4">
                 <Users className="h-6 w-6 text-primary" />
                 <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground">
-                  The Creative Team
+                  {team.title || "De Wijsneuzen"}
                 </h2>
+              </div>
+
+              <div className="relative mx-auto max-w-4xl rounded-xl overflow-hidden border-2 border-border shadow-md">
+                <Image
+                  src="/team-wijsneuzen.png"
+                  alt="Teamfoto De Wijsneuzen"
+                  width={1024}
+                  height={576}
+                  className="w-full h-auto object-cover"
+                  priority
+                />
               </div>
             </div>
 
@@ -95,14 +96,7 @@ export default async function WijsneuzenPage() {
               {teamMembers.map((member) => (
                 <Card key={member.name} className="bg-card border-2 border-border text-center overflow-hidden">
                   <CardContent className="p-4">
-                    <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary/20">
-                      <img
-                        src={member.image || "/placeholder.svg"}
-                        alt={member.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <h3 className="font-display font-semibold text-foreground">
+                    <h3 className="font-display font-semibold text-foreground mb-1">
                       {member.name}
                     </h3>
                     <p className="text-sm text-muted-foreground italic">

@@ -146,8 +146,11 @@ export const defaultPageContent: PageSection[] = [
   {
     pageSlug: "wijsneuzen",
     sectionKey: "team",
-    title: "The Creative Team",
-    content: "",
+    title: "De Wijsneuzen",
+    content: `Bram Janssen|Project Lead
+Anouska de Vries|Chief Historian
+Marc Sanders|Visual Designer
+Sofie Peeters|Local Liaison`,
   },
   {
     pageSlug: "wijsneuzen",
