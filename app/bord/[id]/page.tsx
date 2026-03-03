@@ -7,6 +7,7 @@ import { BordQuiz } from "@/components/bord/bord-quiz"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { getBordById, getAllBorden } from "@/lib/borden-data"
+import { getQuizQuestionsForBord } from "@/lib/quiz-data"
 import { ArrowLeft, Share2, BookOpen, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 
 interface BordPageProps {
@@ -112,14 +113,8 @@ export default async function BordPage({ params }: BordPageProps) {
               />
             )}
 
-            {/* Quiz */}
-            <BordQuiz
-              question={bord.quiz.question}
-              hint={bord.quiz.hint}
-              options={bord.quiz.options}
-              correctAnswer={bord.quiz.correctAnswer}
-              explanation={bord.quiz.explanation}
-            />
+            {/* Quiz — 5 meerkeuzevragen per bord */}
+            <BordQuiz questions={getQuizQuestionsForBord(bord.id).slice(0, 5)} />
 
             {/* Historisch Weetje */}
             <Card className="bg-primary/5 border-2 border-primary/20 rounded-xl overflow-hidden">
