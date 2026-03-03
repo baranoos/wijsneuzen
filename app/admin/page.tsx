@@ -19,7 +19,16 @@ import {
   BookOpen,
   HelpCircle,
   Loader2,
+  ImageIcon,
+  Landmark,
+  FolderKanban,
+  Info,
+  LogOut,
+  Undo2,
+  Shield,
+  HandHeart,
 } from "lucide-react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 
 interface PageSection {
@@ -58,6 +67,21 @@ const pageConfig: Record<
     icon: <HelpCircle className="h-4 w-4" />,
     description: "Quiz pagina",
   },
+  geschiedenis: {
+    label: "Geschiedenis",
+    icon: <Landmark className="h-4 w-4" />,
+    description: "De geschiedenis van Philippine",
+  },
+  "het-project": {
+    label: "Het Project",
+    icon: <FolderKanban className="h-4 w-4" />,
+    description: "Over het project",
+  },
+  about: {
+    label: "Over Ons",
+    icon: <Info className="h-4 w-4" />,
+    description: "Over ons pagina",
+  },
 }
 
 const sectionLabels: Record<string, string> = {
@@ -66,10 +90,26 @@ const sectionLabels: Record<string, string> = {
   "route-preview": "Route Preview",
   "our-story": "Ons Verhaal",
   contact: "Contact Sectie",
+  intro: "Introductie",
+  kasteel: "Vestingstad",
+  mosselvisserij: "Mosselvisserij",
+  omgeving: "Water en Landwinning",
+  vandaag: "Philippine Vandaag",
+  timeline: "Tijdlijn",
+  "timeline-events": "Tijdlijn Gebeurtenissen",
+  "image-1": "Afbeelding 1",
+  "image-2": "Afbeelding 2",
+  "image-3": "Afbeelding 3",
+  "project-info": "Projectinformatie",
+  goals: "Doelstellingen",
+  team: "Het Team",
+  mission: "Onze Missie",
 }
 
 export default function AdminDashboard() {
+  const router = useRouter()
   const [sections, setSections] = useState<PageSection[]>([])
+  const [originalSections, setOriginalSections] = useState<PageSection[]>([])
   const [activePage, setActivePage] = useState<string>("home")
   const [saving, setSaving] = useState<string | null>(null)
   const [status, setStatus] = useState<{
@@ -78,6 +118,21 @@ export default function AdminDashboard() {
   } | null>(null)
   const [loading, setLoading] = useState(true)
   const [seeding, setSeeding] = useState(false)
+  const [userRole, setUserRole] = useState<string>("")
+  const [userName, setUserName] = useState<string>("")
+
+  // Fetch current user role
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.user) {
+          setUserRole(data.user.role)
+          setUserName(data.user.name)
+        }
+      })
+      .catch(() => {})
+  }, [])
 
   const fetchContent = useCallback(async () => {
     setLoading(true)
@@ -86,6 +141,7 @@ export default function AdminDashboard() {
       if (!res.ok) throw new Error("Failed to fetch")
       const data = await res.json()
       setSections(data)
+      setOriginalSections(JSON.parse(JSON.stringify(data)))
     } catch {
       setStatus({ type: "error", message: "Kon content niet laden." })
     } finally {
@@ -110,6 +166,15 @@ export default function AdminDashboard() {
       })
 
       if (!res.ok) throw new Error("Failed to save")
+
+      // Update original so cancel works correctly after save
+      setOriginalSections((prev) =>
+        prev.map((s) =>
+          s.pageSlug === section.pageSlug && s.sectionKey === section.sectionKey
+            ? { ...section }
+            : s
+        )
+      )
 
       setStatus({
         type: "success",
@@ -138,6 +203,43 @@ export default function AdminDashboard() {
       setStatus({ type: "error", message: "Database seeden mislukt." })
     } finally {
       setSeeding(false)
+    }
+  }
+
+  const handleCancel = (pageSlug: string, sectionKey: string) => {
+    const original = originalSections.find(
+      (s) => s.pageSlug === pageSlug && s.sectionKey === sectionKey
+    )
+    if (original) {
+      setSections((prev) =>
+        prev.map((s) =>
+          s.pageSlug === pageSlug && s.sectionKey === sectionKey
+            ? { ...original }
+            : s
+        )
+      )
+      setStatus({ type: "info", message: "Wijzigingen ongedaan gemaakt." })
+    }
+  }
+
+  const hasChanges = (pageSlug: string, sectionKey: string) => {
+    const current = sections.find(
+      (s) => s.pageSlug === pageSlug && s.sectionKey === sectionKey
+    )
+    const original = originalSections.find(
+      (s) => s.pageSlug === pageSlug && s.sectionKey === sectionKey
+    )
+    if (!current || !original) return false
+    return current.title !== original.title || current.content !== original.content
+  }
+
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" })
+      router.push("/login")
+      router.refresh()
+    } catch {
+      router.push("/login")
     }
   }
 
@@ -171,25 +273,33 @@ export default function AdminDashboard() {
             </h1>
           </div>
           <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleSeed}
-              disabled={seeding}
-            >
-              {seeding ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <Database className="h-4 w-4 mr-2" />
-              )}
-              Database Seeden
-            </Button>
-            <Button variant="outline" size="sm" onClick={fetchContent}>
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Vernieuwen
-            </Button>
+            {userRole === "WIJSNEUZEN" && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleSeed}
+                disabled={seeding}
+              >
+                {seeding ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <Database className="h-4 w-4 mr-2" />
+                )}
+                Database Seeden
+              </Button>
+            )}
+            {userRole === "WIJSNEUZEN" && (
+              <Button variant="outline" size="sm" onClick={fetchContent}>
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Vernieuwen
+              </Button>
+            )}
             <Button variant="ghost" size="sm" asChild>
               <Link href="/">← Naar Website</Link>
+            </Button>
+            <Button variant="outline" size="sm" onClick={handleLogout} className="text-destructive hover:text-destructive">
+              <LogOut className="h-4 w-4 mr-2" />
+              Uitloggen
             </Button>
           </div>
         </div>
@@ -220,6 +330,8 @@ export default function AdminDashboard() {
           {/* Sidebar - Page Navigation */}
           <aside className="md:w-64 shrink-0">
             <div className="sticky top-24">
+              {userRole === "WIJSNEUZEN" && (
+                <>
               <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
                 Pagina&apos;s
               </h2>
@@ -249,11 +361,95 @@ export default function AdminDashboard() {
                   </button>
                 ))}
               </nav>
+                </>
+              )}
+
+              <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3 mt-8">
+                Beheer
+              </h2>
+              <nav className="space-y-1">
+                <Link
+                  href="/admin/blog"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+                >
+                  <BookOpen className="h-4 w-4" />
+                  Blogbeheer
+                </Link>
+                {userRole === "WIJSNEUZEN" && (
+                  <Link
+                    href="/admin/images"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+                  >
+                    <ImageIcon className="h-4 w-4" />
+                    Beeldbeheer
+                  </Link>
+                )}
+                <Link
+                  href="/admin/vrijwilligers"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+                >
+                  <HandHeart className="h-4 w-4" />
+                  Vrijwilligers
+                </Link>
+                {userRole === "WIJSNEUZEN" && (
+                  <Link
+                    href="/admin/users"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+                  >
+                    <Shield className="h-4 w-4" />
+                    Gebruikersbeheer
+                  </Link>
+                )}
+              </nav>
+
+              {/* User info */}
+              {userName && (
+                <div className="mt-8 p-3 rounded-lg bg-secondary/50 border">
+                  <p className="text-xs text-muted-foreground">Ingelogd als</p>
+                  <p className="text-sm font-medium text-foreground">{userName}</p>
+                  <p className="text-xs text-primary font-medium">{userRole}</p>
+                </div>
+              )}
             </div>
           </aside>
 
           {/* Main Content */}
           <main className="flex-1 min-w-0">
+            {userRole === "VERIFIED" ? (
+              /* VERIFIED users see a simplified dashboard */
+              <div>
+                <div className="mb-6">
+                  <h2 className="font-display text-2xl font-bold text-foreground">
+                    Welkom, {userName}!
+                  </h2>
+                  <p className="text-muted-foreground text-sm mt-1">
+                    Je bent geverifieerd. Je kunt blogposts en vrijwilligersoproepen aanmaken en bewerken.
+                  </p>
+                </div>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <Link href="/admin/blog">
+                    <Card className="border-2 hover:border-primary/50 transition-colors cursor-pointer">
+                      <CardContent className="p-8 text-center">
+                        <BookOpen className="h-12 w-12 text-primary mx-auto mb-4" />
+                        <h3 className="font-display text-lg font-semibold">Blogbeheer</h3>
+                        <p className="text-sm text-muted-foreground mt-2">Maak en bewerk blogposts</p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                  <Link href="/admin/vrijwilligers">
+                    <Card className="border-2 hover:border-primary/50 transition-colors cursor-pointer">
+                      <CardContent className="p-8 text-center">
+                        <HandHeart className="h-12 w-12 text-primary mx-auto mb-4" />
+                        <h3 className="font-display text-lg font-semibold">Vrijwilligersbeheer</h3>
+                        <p className="text-sm text-muted-foreground mt-2">Maak en bewerk vrijwilligersoproepen</p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              /* WIJSNEUZEN users see full CMS editor */
+              <>
             <div className="mb-6">
               <h2 className="font-display text-2xl font-bold text-foreground flex items-center gap-2">
                 {pageConfig[activePage]?.icon}
@@ -299,18 +495,32 @@ export default function AdminDashboard() {
                             {section.pageSlug} / {section.sectionKey}
                           </p>
                         </div>
-                        <Button
-                          size="sm"
-                          onClick={() => handleSave(section)}
-                          disabled={isSaving}
-                        >
-                          {isSaving ? (
-                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                          ) : (
-                            <Save className="h-4 w-4 mr-2" />
+                        <div className="flex gap-2">
+                          {hasChanges(section.pageSlug, section.sectionKey) && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() =>
+                                handleCancel(section.pageSlug, section.sectionKey)
+                              }
+                            >
+                              <Undo2 className="h-4 w-4 mr-2" />
+                              Annuleren
+                            </Button>
                           )}
-                          Opslaan
-                        </Button>
+                          <Button
+                            size="sm"
+                            onClick={() => handleSave(section)}
+                            disabled={isSaving}
+                          >
+                            {isSaving ? (
+                              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                            ) : (
+                              <Save className="h-4 w-4 mr-2" />
+                            )}
+                            Opslaan
+                          </Button>
+                        </div>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         {/* Title field */}
@@ -355,6 +565,8 @@ export default function AdminDashboard() {
                   )
                 })}
               </div>
+            )}
+              </>
             )}
           </main>
         </div>

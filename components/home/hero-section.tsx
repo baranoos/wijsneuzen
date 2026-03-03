@@ -1,10 +1,14 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Castle } from "lucide-react"
-import { getPageContent } from "@/lib/page-content"
+import { Castle, Footprints, MapPin } from "lucide-react"
+import { getPageContent, getPageContents } from "@/lib/page-content"
 
 export async function HeroSection() {
-  const hero = await getPageContent("home", "hero")
+  const content = await getPageContents("home")
+  const hero = content["hero"] || { title: "", content: "" }
+  const heroBadge = content["hero-badge"] || { title: "Historische Wandelroute", content: "" }
+  const heroIntro = content["hero-intro"] || { title: "", content: "" }
+  const heroButton = content["hero-button"] || { title: "Start de Wandeling", content: "/route" }
 
   return (
     <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
@@ -23,9 +27,16 @@ export async function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           {/* Historic card */}
           <div className="bg-cream/95 backdrop-blur-sm rounded-lg shadow-2xl p-8 md:p-12 text-center border-4 border-primary/20">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-1.5 text-sm font-medium mb-6">
+              <Footprints className="h-4 w-4" />
+              <span>{heroBadge.title}</span>
+              <MapPin className="h-4 w-4" />
+            </div>
+
             <Castle className="h-12 w-12 text-primary mx-auto mb-4" />
             
             <h1 className="font-display text-4xl md:text-5xl font-bold text-sepia-dark mb-4 text-balance">
@@ -34,13 +45,17 @@ export async function HeroSection() {
             
             <div className="w-16 h-1 bg-primary mx-auto mb-6" />
             
-            <p className="text-muted-foreground leading-relaxed mb-8 text-pretty">
+            <p className="text-lg text-muted-foreground leading-relaxed mb-4 text-pretty">
               {hero.content}
+            </p>
+
+            <p className="text-muted-foreground leading-relaxed mb-8 text-pretty max-w-xl mx-auto">
+              {heroIntro.content}
             </p>
             
             <Button asChild size="lg" className="font-semibold">
-              <Link href="/route">
-                Start de Tour
+              <Link href={heroButton.content || "/route"}>
+                {heroButton.title}
               </Link>
             </Button>
           </div>

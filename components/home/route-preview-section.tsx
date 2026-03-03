@@ -7,33 +7,33 @@ import { getPageContent } from "@/lib/page-content"
 const stops = [
   {
     id: 1,
-    title: "De Haven",
-    description: "Waar de mosselvisserij begon",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80",
+    title: "Het Ontstaan",
+    description: "Van polder tot stad",
+    image: "https://images.unsplash.com/photo-1590074072786-a66914d668f1?w=400&q=80",
   },
   {
     id: 2,
-    title: "Het Marktplein",
-    description: "Hart van de gemeenschap",
-    image: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&q=80",
+    title: "Water",
+    description: "De haven & de Braakman",
+    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80",
   },
   {
     id: 3,
-    title: "De Kerk",
-    description: "Eeuwen van geschiedenis",
-    image: "https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=400&q=80",
+    title: "Spaanse Linies",
+    description: "Verdedigingswerken",
+    image: "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?w=400&q=80",
   },
   {
     id: 4,
-    title: "De Molen",
-    description: "Industrieel erfgoed",
+    title: "Prins Maurits",
+    description: "Landing & het Mauritsfort",
     image: "https://images.unsplash.com/photo-1565008576549-57569a49371d?w=400&q=80",
   },
   {
     id: 5,
-    title: "Het Fort",
-    description: "Verdedigingswerken",
-    image: "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?w=400&q=80",
+    title: "De Vesting",
+    description: "Van schans tot vestingstad",
+    image: "https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=400&q=80",
   },
 ]
 

@@ -2,14 +2,40 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { getAllPublishedPosts } from "@/lib/blog-data"
+import { prisma } from "@/lib/prisma"
 import Link from "next/link"
 import { Calendar, User, ArrowRight } from "lucide-react"
 import { getPageContent } from "@/lib/page-content"
 
+export const dynamic = "force-dynamic"
+
 export default async function BlogPage() {
-  const posts = getAllPublishedPosts()
   const heroContent = await getPageContent("blog", "hero")
+
+  let posts: Array<{
+    id: string
+    title: string
+    slug: string
+    excerpt: string
+    featuredImage: string
+    authorName: string
+    authorAvatar: string
+    tags: string[]
+    publishedAt: Date
+  }> = []
+
+  try {
+    const dbPosts = await prisma.blogPost.findMany({
+      where: { status: "published" },
+      orderBy: { publishedAt: "desc" },
+    })
+    posts = dbPosts.map((p) => ({
+      ...p,
+      tags: JSON.parse(p.tags) as string[],
+    }))
+  } catch {
+    // fallback: empty
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -78,11 +104,11 @@ export default async function BlogPage() {
                               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                                 <div className="flex items-center gap-2">
                                   <img
-                                    src={post.author.avatar || "/placeholder.svg"}
-                                    alt={post.author.name}
+                                    src={post.authorAvatar || "/placeholder.svg"}
+                                    alt={post.authorName}
                                     className="w-6 h-6 rounded-full object-cover"
                                   />
-                                  <span>{post.author.name}</span>
+                                  <span>{post.authorName}</span>
                                 </div>
                                 <div className="flex items-center gap-1">
                                   <Calendar className="h-4 w-4" />

@@ -8,6 +8,27 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum Role {
+  PENDING
+  USER
+  VERIFIED
+  WIJSNEUZEN
+}
+
+model User {
+  id             String          @id @default(cuid())
+  name           String
+  email          String          @unique
+  password       String
+  role           Role            @default(PENDING)
+  blogPosts      BlogPost[]
+  volunteerPosts VolunteerPost[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@map("users")
+}
+
 model PageContent {
   id         String   @id @default(cuid())
   pageSlug   String
@@ -19,4 +40,75 @@ model PageContent {
 
   @@unique([pageSlug, sectionKey])
   @@map("page_contents")
+}
+
+model BlogPost {
+  id            String   @id @default(cuid())
+  title         String
+  slug          String   @unique
+  excerpt       String   @default("")
+  content       String   @default("")
+  featuredImage String   @default("")
+  authorName    String   @default("")
+  authorAvatar  String   @default("")
+  authorId      String?
+  author        User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  status        String   @default("draft")
+  tags          String   @default("[]")
+  publishedAt   DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  createdAt     DateTime @default(now())
+
+  @@map("blog_posts")
+}
+
+model Image {
+  id        String   @id @default(cuid())
+  filename  String
+  url       String
+  altText   String   @default("")
+  caption   String   @default("")
+  mimeType  String
+  size      Int
+  width     Int?
+  height    Int?
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  @@map("images")
+}
+
+model VolunteerPost {
+  id            String                 @id @default(cuid())
+  title         String
+  slug          String                 @unique
+  description   String                 @default("")
+  content       String                 @default("")
+  featuredImage String                 @default("")
+  spotsNeeded   Int                    @default(1)
+  spotsFilled   Int                    @default(0)
+  status        String                 @default("open")
+  authorName    String                 @default("")
+  authorId      String?
+  author        User?                  @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  location      String                 @default("")
+  date          String                 @default("")
+  applications  VolunteerApplication[]
+  updatedAt     DateTime               @updatedAt
+  createdAt     DateTime               @default(now())
+
+  @@map("volunteer_posts")
+}
+
+model VolunteerApplication {
+  id              String        @id @default(cuid())
+  volunteerPostId String
+  volunteerPost   VolunteerPost @relation(fields: [volunteerPostId], references: [id], onDelete: Cascade)
+  name            String
+  email           String        @default("")
+  message         String        @default("")
+  status          String        @default("pending")
+  createdAt       DateTime      @default(now())
+
+  @@map("volunteer_applications")
 }

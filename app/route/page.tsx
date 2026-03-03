@@ -2,50 +2,51 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { MapPin, Clock, Footprints, ArrowRight } from "lucide-react"
+import { MapPin, Clock, Footprints, ArrowRight, Map } from "lucide-react"
 import Link from "next/link"
-import { getPageContent } from "@/lib/page-content"
+import { getPageContents, getPageContent } from "@/lib/page-content"
+import { RouteMap } from "@/components/route/route-map"
 
 const informatieBorden = [
   {
     id: 1,
-    title: "De Haven",
-    subtitle: "Het begin van de mosselvisserij",
-    description: "Ontdek de rijke maritieme geschiedenis van Philippine's haven, waar generaties vissers hun brood verdienden.",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
-    duration: "10 min",
+    title: "Het Ontstaan van het Dorp",
+    subtitle: "Van polder tot stad — het verhaal van Philippine",
+    description: "In 1505 kreeg Jeronimus Laureyn toestemming om een nieuwe polder aan te leggen, vernoemd naar Filips de Schone. Ontdek hoe dit de basis legde voor het dorp Philippine en welke grootse plannen Jeronimus had.",
+    image: "https://images.unsplash.com/photo-1590074072786-a66914d668f1?w=600&q=80",
+    duration: "5 min",
   },
   {
     id: 2,
-    title: "Het Marktplein",
-    subtitle: "Hart van de gemeenschap",
-    description: "Het centrale plein waar handel, feesten en dagelijks leven samenkwamen door de eeuwen heen.",
-    image: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=600&q=80",
-    duration: "8 min",
+    title: "Water",
+    subtitle: "De haven, de Braakman & de natuurrampen",
+    description: "Philippine lag tot 1952 direct aan het water via de Braakman. Lees over de bloeiende mosselvisserij, de strijd tegen verzanding, de verwoestende Doorbraak van Nieuwersluis in 1488 en het einde van de haven.",
+    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80",
+    duration: "7 min",
   },
   {
     id: 3,
-    title: "De Sint-Filippuskerk",
-    subtitle: "Eeuwen van geloof",
-    description: "Deze historische kerk vormt al eeuwenlang het spirituele centrum van Philippine.",
-    image: "https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=600&q=80",
-    duration: "12 min",
+    title: "Spaanse Linies",
+    subtitle: "Verdedigingswerken door de eeuwen heen",
+    description: "Tussen 1568 en 1794 werden in Zeeuws-Vlaanderen verdedigingslinies aangelegd van aarden forten, schansen en grachten. Ontdek hoe inundatie als wapen werd ingezet en wat scheurbroeken waren.",
+    image: "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?w=600&q=80",
+    duration: "6 min",
   },
   {
     id: 4,
-    title: "De Molen",
-    subtitle: "Industrieel erfgoed",
-    description: "Een monument van Nederlandse vindingrijkheid en de agrarische geschiedenis van de regio.",
+    title: "Prins Maurits",
+    subtitle: "De landing bij Philippine & het Mauritsfort",
+    description: "In juni 1600 landde Prins Maurits van Oranje-Nassau met duizenden soldaten bij Philippine, op weg naar de Slag bij Nieuwpoort. Lees over het Mauritsfort en de verovering van Philippine in 1633.",
     image: "https://images.unsplash.com/photo-1565008576549-57569a49371d?w=600&q=80",
     duration: "7 min",
   },
   {
     id: 5,
-    title: "Het Fort",
-    subtitle: "Verdedigingswerken",
-    description: "De overblijfselen van de vestingwerken die Philippine beschermden tegen invallers.",
-    image: "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?w=600&q=80",
-    duration: "15 min",
+    title: "De Vesting van Philippine",
+    subtitle: "Van Spaanse schans tot Zeeuwse vestingstad",
+    description: "Philippine begon als driehoekige Spaanse schans ('het Kasteel') en groeide uit tot een vestingstad met 4 bastions. Ontdek het verschil tussen Hoog- en Laag-Philippine en de sporen die vandaag nog zichtbaar zijn.",
+    image: "https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=600&q=80",
+    duration: "6 min",
   },
 ]
 
@@ -67,25 +68,52 @@ export default async function RoutePage() {
                 {heroContent.title}
               </h1>
               <div className="w-16 h-1 bg-primary mx-auto mb-6" />
-              <p className="text-cream/80 leading-relaxed mb-8">
+              <p className="text-cream/80 leading-relaxed mb-4">
                 {heroContent.content}
+              </p>
+
+              <p className="text-cream/70 text-sm leading-relaxed mb-8 max-w-xl mx-auto">
+                Dit Digitaal Archeopad is ontwikkeld door De Wijsneuzen (PWVO Terneuzen) 
+                in samenwerking met de Historics van Philippine en studenten van Scalda. 
+                Scan de QR-codes bij elk bord voor extra informatie en achtergrondverhalen.
               </p>
               
               {/* Route stats */}
               <div className="flex justify-center gap-8">
                 <div className="flex items-center gap-2">
                   <Footprints className="h-5 w-5 text-primary" />
-                  <span className="text-sm">2.5 km</span>
+                  <span className="text-sm">Wandelbos</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="h-5 w-5 text-primary" />
-                  <span className="text-sm">~1 uur</span>
+                  <span className="text-sm">~45 min</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-primary" />
-                  <span className="text-sm">5 stops</span>
+                  <span className="text-sm">5 QR-borden</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Route Map */}
+        <section className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-1.5 text-sm font-medium mb-4">
+                  <Map className="h-4 w-4" />
+                  <span>Routekaart</span>
+                </div>
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">
+                  De Wandelroute
+                </h2>
+                <p className="text-muted-foreground max-w-lg mx-auto">
+                  Volg de route van bord naar bord door het wandelbos. Klik op een bord om in te zoomen.
+                </p>
+              </div>
+              <RouteMap />
             </div>
           </div>
         </section>

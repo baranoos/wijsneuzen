@@ -1,27 +1,16 @@
 import { MapPin, Headphones, BookOpen } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
-import { getPageContent } from "@/lib/page-content"
+import { getPageContents } from "@/lib/page-content"
 
-const features = [
-  {
-    icon: MapPin,
-    title: "Interactieve Route",
-    description: "Volg de weg via je smartphone langs alle historische locaties.",
-  },
-  {
-    icon: Headphones,
-    title: "Audio Gids",
-    description: "Luister naar lokale vertellers die de geschiedenis tot leven brengen.",
-  },
-  {
-    icon: BookOpen,
-    title: "Historische Weetjes",
-    description: "Leer meer over de rijke cultuur en het erfgoed van Philippine.",
-  },
-]
+const featureIcons = [MapPin, Headphones, BookOpen]
 
 export async function FeaturesSection() {
-  const featuresContent = await getPageContent("home", "features")
+  const content = await getPageContents("home")
+  const featuresContent = content["features"] || { title: "Verken het verleden", content: "" }
+  const feature1 = content["feature-1"] || { title: "Interactieve Route", content: "Volg de weg via je smartphone langs alle historische locaties." }
+  const feature2 = content["feature-2"] || { title: "Audio Gids", content: "Luister naar lokale vertellers die de geschiedenis tot leven brengen." }
+  const feature3 = content["feature-3"] || { title: "Historische Weetjes", content: "Leer meer over de rijke cultuur en het erfgoed van Philippine." }
+  const features = [feature1, feature2, feature3]
 
   return (
     <section className="py-16 md:py-24 bg-background">
@@ -41,24 +30,27 @@ export async function FeaturesSection() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {features.map((feature) => (
-            <Card 
-              key={feature.title} 
-              className="bg-card border-2 border-border hover:border-primary/50 transition-colors"
-            >
-              <CardContent className="p-6 text-center">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <feature.icon className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="font-display text-lg font-semibold text-foreground mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {feature.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+          {features.map((feature, index) => {
+            const Icon = featureIcons[index] || MapPin
+            return (
+              <Card 
+                key={index} 
+                className="bg-card border-2 border-border hover:border-primary/50 transition-colors"
+              >
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <Icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="font-display text-lg font-semibold text-foreground mb-2">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {feature.content}
+                  </p>
+                </CardContent>
+              </Card>
+            )
+          })}
         </div>
       </div>
     </section>

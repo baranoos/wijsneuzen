@@ -4,25 +4,44 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { getPostBySlug, getAllPublishedPosts } from "@/lib/blog-data"
+import { prisma } from "@/lib/prisma"
 import { ArrowLeft, Calendar, User, Share2 } from "lucide-react"
+
+export const dynamic = "force-dynamic"
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
 }
 
-export async function generateStaticParams() {
-  const posts = getAllPublishedPosts()
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
-}
-
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params
-  const post = getPostBySlug(slug)
 
-  if (!post) {
+  let post: {
+    title: string
+    slug: string
+    content: string
+    excerpt: string
+    featuredImage: string
+    authorName: string
+    authorAvatar: string
+    tags: string[]
+    publishedAt: Date
+    status: string
+  } | null = null
+
+  try {
+    const dbPost = await prisma.blogPost.findUnique({ where: { slug } })
+    if (dbPost) {
+      post = {
+        ...dbPost,
+        tags: JSON.parse(dbPost.tags) as string[],
+      }
+    }
+  } catch {
+    // fallback
+  }
+
+  if (!post || post.status !== "published") {
     notFound()
   }
 
@@ -82,12 +101,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground border-t border-border pt-6">
                 <div className="flex items-center gap-3">
                   <img
-                    src={post.author.avatar || "/placeholder.svg"}
-                    alt={post.author.name}
+                    src={post.authorAvatar || "/placeholder.svg"}
+                    alt={post.authorName}
                     className="w-10 h-10 rounded-full object-cover border-2 border-primary/20"
                   />
                   <div>
-                    <p className="font-medium text-foreground">{post.author.name}</p>
+                    <p className="font-medium text-foreground">{post.authorName}</p>
                     <p className="text-xs">Auteur</p>
                   </div>
                 </div>
