@@ -25,15 +25,15 @@ export function ToenNuSlider({
   }
 
   return (
-    <div className="bg-card rounded-lg border-2 border-border p-4">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="font-display text-lg font-semibold text-foreground">
+    <div className="bg-card rounded-xl border-2 border-border p-4 sm:p-5 shadow-sm">
+      <div className="flex items-center justify-between mb-3 sm:mb-4">
+        <h3 className="font-display text-base sm:text-lg font-semibold text-foreground">
           Toen & Nu
         </h3>
-        <History className="h-5 w-5 text-primary" />
+        <History className="h-5 w-5 text-primary shrink-0" />
       </div>
 
-      <div className="relative aspect-video rounded-lg overflow-hidden">
+      <div className="relative aspect-video rounded-lg overflow-hidden touch-none">
         {/* Modern image (background) */}
         <img
           src={modernImage || "/placeholder.svg"}

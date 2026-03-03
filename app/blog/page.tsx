@@ -65,9 +65,12 @@ export default async function BlogPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               {posts.length === 0 ? (
-                <div className="text-center py-12">
-                  <p className="text-muted-foreground">
-                    Er zijn nog geen blogposts gepubliceerd.
+                <div className="text-center py-16 px-4">
+                  <p className="text-muted-foreground text-lg mb-2">
+                    Er zijn nog geen blogposts.
+                  </p>
+                  <p className="text-muted-foreground/80 text-sm max-w-md mx-auto">
+                    Beheerders kunnen via het admin panel (Blogbeheer) nieuwe berichten toevoegen.
                   </p>
                 </div>
               ) : (

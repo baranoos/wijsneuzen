@@ -10,20 +10,26 @@ import { getPageContents } from "@/lib/page-content"
 export default async function WijsneuzenPage() {
   const content = await getPageContents("wijsneuzen")
   const hero = content["hero"] || { title: "Project Philippine", content: "" }
-  const story = content["our-story"] || { title: "Our Story", content: "" }
+  const legoLeague = content["lego-league"] || {
+    title: "Ons FIRST LEGO League-avontuur",
+    content: "",
+  }
   const contact = content["contact"] || { title: "De Wijsneuzen", content: "" }
   const team = content["team"] || { title: "De Wijsneuzen", content: "" }
 
+  // Eén naam per regel, of "naam | rol". Geen | = rol "Teamlid"
   const teamMembers =
     team.content
       ?.split("\n")
       .map((line) => line.trim())
       .filter((line) => line.length > 0)
       .map((line) => {
-        const [name, role] = line.split("|").map((part) => part.trim())
+        const pipe = line.indexOf("|")
+        const name = pipe >= 0 ? line.slice(0, pipe).trim() : line
+        const role = pipe >= 0 ? line.slice(pipe + 1).trim() || "Teamlid" : "Teamlid"
         return { name, role }
       })
-      .filter((member) => member.name && member.role) ?? []
+      .filter((member) => member.name.length > 0) ?? []
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -56,18 +62,22 @@ export default async function WijsneuzenPage() {
           </div>
         </section>
 
-        {/* Our Story Section */}
-        <section className="py-16 md:py-24 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-8">
-                {story.title}
-              </h2>
-              
-              <div className="prose prose-lg max-w-none text-muted-foreground space-y-6" dangerouslySetInnerHTML={{ __html: story.content }} />
+        {/* LEGO League Section (boven de teamleden) */}
+        {legoLeague.content && (
+          <section className="py-16 md:py-20 bg-secondary/10">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto">
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
+                  {legoLeague.title}
+                </h2>
+                <div
+                  className="prose prose-lg max-w-none text-muted-foreground space-y-6"
+                  dangerouslySetInnerHTML={{ __html: legoLeague.content }}
+                />
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Team Section */}
         <section className="py-16 md:py-24 bg-secondary/30">

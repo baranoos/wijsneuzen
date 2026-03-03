@@ -5,6 +5,7 @@ import { ContentEditor } from "@/components/admin/content-editor"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import {
   Save,
@@ -89,6 +90,7 @@ const sectionLabels: Record<string, string> = {
   features: "Kenmerken Sectie",
   "route-preview": "Route Preview",
   "our-story": "Ons Verhaal",
+  "lego-league": "LEGO League Samenvatting",
   contact: "Contact Sectie",
   intro: "Introductie",
   kasteel: "Vestingstad",
@@ -543,23 +545,57 @@ export default function AdminDashboard() {
                           />
                         </div>
 
-                        {/* Content field */}
-                        <div>
-                          <label className="block text-sm font-medium text-foreground mb-1.5">
-                            Inhoud
-                          </label>
-                          <ContentEditor
-                            value={section.content}
-                            onChange={(val) =>
-                              updateSection(
-                                section.pageSlug,
-                                section.sectionKey,
-                                "content",
-                                val
-                              )
-                            }
-                          />
-                        </div>
+                        {/* Teamleden: eenvoudige editor (één naam per regel) */}
+                        {section.pageSlug === "wijsneuzen" && section.sectionKey === "team" ? (
+                          <div>
+                            <label className="block text-sm font-medium text-foreground mb-1.5">
+                              Teamleden
+                            </label>
+                            <p className="text-sm text-muted-foreground mb-2">
+                              Typ elke naam op een <strong>nieuwe regel</strong>. Dat is alles! Je hoeft geen rol in te vullen.
+                            </p>
+                            <Textarea
+                              value={section.content}
+                              onChange={(e) =>
+                                updateSection(
+                                  section.pageSlug,
+                                  section.sectionKey,
+                                  "content",
+                                  e.target.value
+                                )
+                              }
+                              placeholder={"Tijn\nNoov\nTygo\nYinthy\nJoël\nKars\nFleur\nMaja\nSasha\nMyra"}
+                              rows={12}
+                              className="border-2 font-mono text-base"
+                            />
+                            <p className="text-xs text-muted-foreground mt-2">
+                              {section.content
+                                ? section.content
+                                    .split("\n")
+                                    .map((l) => l.trim())
+                                    .filter(Boolean).length
+                                : 0}{" "}
+                              namen worden getoond op de site.
+                            </p>
+                          </div>
+                        ) : (
+                          <div>
+                            <label className="block text-sm font-medium text-foreground mb-1.5">
+                              Inhoud
+                            </label>
+                            <ContentEditor
+                              value={section.content}
+                              onChange={(val) =>
+                                updateSection(
+                                  section.pageSlug,
+                                  section.sectionKey,
+                                  "content",
+                                  val
+                                )
+                              }
+                            />
+                          </div>
+                        )}
                       </CardContent>
                     </Card>
                   )

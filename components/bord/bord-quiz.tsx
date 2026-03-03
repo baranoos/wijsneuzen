@@ -45,10 +45,10 @@ export function BordQuiz({
   }
 
   return (
-    <Card className="bg-cream border-2 border-primary/30 overflow-hidden">
+    <Card className="bg-cream border-2 border-primary/30 overflow-hidden rounded-xl shadow-sm">
       <div className="bg-primary/10 px-4 py-3 flex items-center gap-2">
-        <MapPin className="h-5 w-5 text-primary" />
-        <h3 className="font-display text-lg font-semibold text-foreground">
+        <MapPin className="h-5 w-5 text-primary shrink-0" />
+        <h3 className="font-display text-base sm:text-lg font-semibold text-foreground">
           Wijsneus Quiz
         </h3>
         <div className="ml-auto">
@@ -56,26 +56,27 @@ export function BordQuiz({
         </div>
       </div>
 
-      <CardContent className="p-6">
+      <CardContent className="p-4 sm:p-6">
         {!isChecked ? (
           <>
-            <p className="text-foreground font-medium mb-4 leading-relaxed">
+            <p className="text-foreground font-medium mb-4 leading-relaxed text-sm sm:text-base">
               {question}
             </p>
 
             {showHint && (
-              <p className="text-sm text-muted-foreground italic mb-4 bg-secondary/50 p-3 rounded">
+              <p className="text-sm text-muted-foreground italic mb-4 bg-secondary/50 p-3 rounded-lg">
                 Hint: {hint}
               </p>
             )}
 
-            <div className="space-y-3 mb-6">
+            <div className="space-y-2 sm:space-y-3 mb-6">
               {options.map((option) => (
                 <button
                   key={option.id}
+                  type="button"
                   onClick={() => setSelectedAnswer(option.id)}
                   className={cn(
-                    "w-full p-4 rounded-lg border-2 text-left transition-all flex items-center gap-3",
+                    "w-full p-3 sm:p-4 rounded-lg border-2 text-left transition-all flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
                     selectedAnswer === option.id
                       ? "border-primary bg-primary/10"
                       : "border-border bg-background hover:border-primary/50"
@@ -91,16 +92,16 @@ export function BordQuiz({
                   >
                     {option.id}
                   </span>
-                  <span className="text-foreground">{option.text}</span>
+                  <span className="text-foreground text-sm sm:text-base min-w-0">{option.text}</span>
                 </button>
               ))}
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex flex-col-reverse sm:flex-row gap-3">
               <Button
                 onClick={handleCheck}
                 disabled={!selectedAnswer}
-                className="flex-1"
+                className="flex-1 w-full sm:w-auto"
               >
                 Controleer Antwoord
               </Button>
@@ -108,7 +109,7 @@ export function BordQuiz({
                 <Button
                   variant="outline"
                   onClick={() => setShowHint(true)}
-                  className="border-primary text-primary"
+                  className="border-primary text-primary w-full sm:w-auto shrink-0"
                 >
                   Hint
                 </Button>
@@ -117,23 +118,22 @@ export function BordQuiz({
           </>
         ) : (
           <div className="text-center">
-            {/* Result icon */}
             <div
               className={cn(
-                "w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center",
+                "w-14 h-14 sm:w-16 sm:h-16 rounded-full mx-auto mb-4 flex items-center justify-center",
                 isCorrect ? "bg-green-100" : "bg-red-100"
               )}
             >
               {isCorrect ? (
-                <Check className="h-8 w-8 text-green-600" />
+                <Check className="h-7 w-7 sm:h-8 sm:w-8 text-green-600" />
               ) : (
-                <X className="h-8 w-8 text-red-600" />
+                <X className="h-7 w-7 sm:h-8 sm:w-8 text-red-600" />
               )}
             </div>
 
             <h4
               className={cn(
-                "font-display text-2xl font-bold mb-2",
+                "font-display text-xl sm:text-2xl font-bold mb-2",
                 isCorrect ? "text-green-600" : "text-red-600"
               )}
             >
@@ -157,7 +157,7 @@ export function BordQuiz({
               </p>
             </div>
 
-            <Button onClick={handleReset} variant="outline" className="border-primary text-primary bg-transparent">
+            <Button onClick={handleReset} variant="outline" className="border-primary text-primary bg-transparent w-full sm:w-auto">
               Probeer Opnieuw
             </Button>
           </div>

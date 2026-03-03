@@ -12,7 +12,7 @@ export async function BordenOverviewSection() {
   const bordenButton = content["borden-button"] || { title: "Bekijk volledige route", content: "/route" }
 
   return (
-    <section className="py-16 md:py-24 bg-secondary/50">
+    <section className="pt-12 md:pt-20 pb-16 md:pb-24 bg-secondary/50 rounded-t-3xl -mt-6 md:-mt-8 relative z-10 shadow-[0_-4px_24px_rgba(0,0,0,0.06)]">
       <div className="container mx-auto px-4">
         {/* Section header */}
         <div className="text-center mb-12">

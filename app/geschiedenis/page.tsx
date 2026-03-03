@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Landmark, Clock, MapPin, BookOpen, Anchor, Fish, Building2 } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { getPageContents } from "@/lib/page-content"
 
 export const dynamic = "force-dynamic"
@@ -52,7 +53,7 @@ export default async function GeschiedenisPage() {
           <div
             className="absolute inset-0 bg-cover bg-center opacity-20"
             style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1920&q=80')`,
+              backgroundImage: `url('/bord1-philipine-mosselvlotbergen.png')`,
             }}
           />
           <div
@@ -108,12 +109,21 @@ export default async function GeschiedenisPage() {
                 {images.map((img, i) => (
                   <Card key={i} className="overflow-hidden border-2">
                     <div className="aspect-[4/3] relative">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={img.content}
-                        alt={img.title}
-                        className="object-cover w-full h-full"
-                      />
+                      {img.content.startsWith("http") ? (
+                        <img
+                          src={img.content}
+                          alt={img.title || "Geschiedenis van Philippine"}
+                          className="object-cover w-full h-full"
+                        />
+                      ) : (
+                        <Image
+                          src={img.content}
+                          alt={img.title || "Geschiedenis van Philippine"}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      )}
                     </div>
                     {img.title && (
                       <CardContent className="p-3">

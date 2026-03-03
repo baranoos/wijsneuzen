@@ -89,7 +89,7 @@ export function Footer() {
                 <span className="font-display text-xl font-bold">De Wijsneuzen</span>
               </div>
               <p className="text-sm text-cream/80 leading-relaxed">
-                Preserving the heritage of Philippine through interactive storytelling and community engagement.
+                Het erfgoed van Philippine beleefbaar maken voor iedereen.
               </p>
             </div>
 
@@ -103,7 +103,7 @@ export function Footer() {
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-primary" />
-                  <span>Village Square, Philippine</span>
+                  <span>Philippine, Zeeland</span>
                 </div>
               </div>
             </div>
@@ -142,7 +142,7 @@ export function Footer() {
           </div>
 
           <div className="mt-6 pt-6 border-t border-cream/20 text-center text-sm text-cream/60">
-            <p>&copy; {new Date().getFullYear()} Project De Wijsneuzen. Alle rechten voorbehouden. Built with pride in Philippine.</p>
+            <p>&copy; {new Date().getFullYear()} Project De Wijsneuzen. Alle rechten voorbehouden.</p>
           </div>
         </div>
       </div>

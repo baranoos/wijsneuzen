@@ -138,19 +138,28 @@ export const defaultPageContent: PageSection[] = [
   },
   {
     pageSlug: "wijsneuzen",
-    sectionKey: "our-story",
-    title: "Our Story",
-    content: `<p>The 'De Wijsneuzen' initiative began as a passion project to preserve the unique coastal history of Philippine. What once was a bustling harbor for mussels is now a town of stories, and we aim to tell them through every step of this guided experience.</p>
-<p>Through careful archival research and oral histories from local elders, we've mapped out a route that showcases the hidden gems and monumental shifts in our local landscape.</p>`,
+    sectionKey: "lego-league",
+    title: "Ons FIRST LEGO League-avontuur",
+    content: `<p>De FIRST LEGO League is een internationale techniekwedstrijd waarin wij als team een LEGO-robot ontwerpen en programmeren én werken aan een innovatieproject rond een jaarlijks thema. Dit jaar was het thema <strong>Unearthed</strong>. Daarbij moesten we onderzoeken tegen welk probleem archeologen aanlopen en zelf een oplossing bedenken die hen kan helpen.</p>
+<p>Tijdens de regiofinale in Zeeland hebben wij ons project en onze robot gepresenteerd. Dat ging zo goed dat we zijn doorgestroomd naar de landelijke finale in Groningen. Daar mogen we opnieuw laten zien wat we hebben ontwikkeld.</p>
+<p>Bij het thema Unearthed ontdekten wij dat archeologen prachtige verhalen uit het verleden zichtbaar maken door opgravingen, maar dat deze verhalen niet altijd makkelijk of aantrekkelijk worden gedeeld met de gemeenschap. Daarom werd onze leervraag:</p>
+<p><em>Hoe kan het verhaal van vroeger, dat door archeologen zichtbaar is gemaakt via opgravingen, gedeeld worden met de gemeenschap?</em></p>
+<p>Ons innovatieproject is een echt mega-teamwerk geworden. Samen met de gemeente, Scalda en andere betrokkenen hebben wij archeologen geholpen om hun ontdekkingen beter toegankelijk te maken. Dat doen we via interactieve borden en deze website, zodat iedereen op een leuke, duidelijke en moderne manier kan ontdekken wat er is onderzocht en wat het verleden ons vertelt.</p>`,
   },
   {
     pageSlug: "wijsneuzen",
     sectionKey: "team",
     title: "De Wijsneuzen",
-    content: `Bram Janssen|Project Lead
-Anouska de Vries|Chief Historian
-Marc Sanders|Visual Designer
-Sofie Peeters|Local Liaison`,
+    content: `Tijn
+Noov
+Tygo
+Yinthy
+Joël
+Kars
+Fleur
+Maja
+Sasha
+Myra`,
   },
   {
     pageSlug: "wijsneuzen",
@@ -163,7 +172,7 @@ Sofie Peeters|Local Liaison`,
     sectionKey: "contact",
     title: "De Wijsneuzen",
     content:
-      "Preserving the heritage of Philippine through interactive storytelling and community engagement.",
+      "Het erfgoed van Philippine beleefbaar maken voor iedereen.",
   },
   {
     pageSlug: "wijsneuzen",
@@ -175,7 +184,7 @@ Sofie Peeters|Local Liaison`,
     pageSlug: "wijsneuzen",
     sectionKey: "contact-location",
     title: "Locatie",
-    content: "Village Square, Philippine",
+    content: "Philippine, Zeeland",
   },
 
   // ── Blog page ────────────────────────────────────────────
@@ -217,20 +226,20 @@ Sofie Peeters|Local Liaison`,
     sectionKey: "footer-brand",
     title: "De Wijsneuzen",
     content:
-      "Preserving the heritage of Philippine through interactive storytelling and community engagement.",
+      "Het erfgoed van Philippine beleefbaar maken voor iedereen.",
   },
   {
     pageSlug: "global",
     sectionKey: "footer-contact",
     title: "Contact",
-    content: "info@wijsneuzen-philippine.nl | Village Square, Philippine",
+    content: "info@wijsneuzen-philippine.nl | Philippine, Zeeland",
   },
   {
     pageSlug: "global",
     sectionKey: "footer-copyright",
     title: "Copyright",
     content:
-      "Project De Wijsneuzen. Alle rechten voorbehouden. Built with pride in Philippine.",
+      "Project De Wijsneuzen. Alle rechten voorbehouden.",
   },
 
   // ── Geschiedenis page ────────────────────────────────────
@@ -311,20 +320,20 @@ Sofie Peeters|Local Liaison`,
   {
     pageSlug: "geschiedenis",
     sectionKey: "image-1",
-    title: "Historische kaart van Philippine",
-    content: "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&q=80",
+    title: "Historische kaart van Zeeland",
+    content: "/bord2-zeeland-toen.png",
   },
   {
     pageSlug: "geschiedenis",
     sectionKey: "image-2",
     title: "De oude haven en de Braakman",
-    content: "https://images.unsplash.com/photo-1590074072786-a66914d668f1?w=800&q=80",
+    content: "/bord1-philipine-mosselvlotbergen.png",
   },
   {
     pageSlug: "geschiedenis",
     sectionKey: "image-3",
-    title: "Het wandelbos vandaag",
-    content: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80",
+    title: "Zeeland vandaag",
+    content: "/bord2-zeeland-nu.png",
   },
 
   // ── Het Project page ─────────────────────────────────────

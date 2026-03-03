@@ -175,13 +175,13 @@ export function RouteMap() {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Map */}
-      <div className="relative rounded-lg overflow-hidden border-2 border-border shadow-lg">
+    <div className="space-y-4 sm:space-y-6">
+      {/* Map — responsive height for mobile */}
+      <div className="relative rounded-xl overflow-hidden border-2 border-border shadow-lg -mx-2 sm:mx-0">
         <div
           ref={mapRef}
-          className="w-full h-[400px] md:h-[500px] bg-secondary"
-          style={{ zIndex: 1 }}
+          className="w-full h-[280px] sm:h-[380px] md:h-[450px] lg:h-[500px] bg-secondary"
+          style={{ zIndex: 1, minHeight: 280 }}
         />
         {!isLoaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-secondary">
@@ -193,25 +193,26 @@ export function RouteMap() {
         )}
       </div>
 
-      {/* Board legend / quick navigation */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+      {/* Board legend / quick navigation — responsive grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
         {bordLocations.map((bord) => (
           <button
             key={bord.id}
+            type="button"
             onClick={() => flyToBoard(bord.id)}
-            className={`text-left p-3 rounded-lg border-2 transition-all hover:shadow-md ${
+            className={`text-left p-3 rounded-xl border-2 transition-all hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
               activeBoard === bord.id
-                ? "border-primary bg-primary/10"
+                ? "border-primary bg-primary/10 shadow-sm"
                 : "border-border bg-card hover:border-primary/50"
             }`}
           >
             <div className="flex items-center gap-2 mb-1">
-              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold">
+              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold shrink-0">
                 {bord.id}
               </span>
-              <span className="text-xs text-muted-foreground">Bord {bord.id}</span>
+              <span className="text-xs text-muted-foreground truncate">Bord {bord.id}</span>
             </div>
-            <p className="text-sm font-semibold text-foreground leading-tight line-clamp-2">
+            <p className="text-xs sm:text-sm font-semibold text-foreground leading-tight line-clamp-2">
               {bord.title}
             </p>
           </button>

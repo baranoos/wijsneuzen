@@ -30,8 +30,8 @@ export const bordenData: InformatieBord[] = [
     id: 1,
     title: "Het Ontstaan van het Dorp",
     subtitle: "Van polder tot stad — het verhaal van Philippine",
-    heroImage: "https://images.unsplash.com/photo-1590074072786-a66914d668f1?w=1200&q=80",
-    historicImage: "https://images.unsplash.com/photo-1578301978018-3005759f48f7?w=600&q=80",
+    heroImage: "/bord1-philipine-mosselvlotbergen.png",
+    historicImage: "/bord1-philipine-mosselvlotbergen.png",
     modernImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
     content: {
       intro: "In het jaar 1505 kreeg Jeronimus Laureyn, Rentmeester van de Koning en Heer van Watervliet, toestemming om een nieuwe polder aan te leggen. Dit was zijn zesde polder. Hij noemde deze polder de Saint Philippinepolder, naar Filips de Schone, de toenmalige vorst over Vlaanderen.",
@@ -62,9 +62,9 @@ export const bordenData: InformatieBord[] = [
     id: 2,
     title: "Water",
     subtitle: "De haven, de Braakman & de natuurrampen",
-    heroImage: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200&q=80",
-    historicImage: "https://images.unsplash.com/photo-1569880153113-76e33fc52d5f?w=600&q=80",
-    modernImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+    heroImage: "/bord2-zeeland-toen.png",
+    historicImage: "/bord2-zeeland-toen.png",
+    modernImage: "/bord2-zeeland-nu.png",
     content: {
       intro: "Philippine is een uniek dorp in Zeeuws-Vlaanderen (vanaf 2003 gemeente Terneuzen) dat wereldwijd bekendstaat als het mosseldorp van Nederland. Hoewel het dorp geen eigen haven meer heeft, trekt het jaarlijks duizenden bezoekers die speciaal komen om mosselen te eten in de mosselrestaurants rondom het dorpsplein.",
       paragraphs: [
@@ -96,7 +96,7 @@ export const bordenData: InformatieBord[] = [
     id: 3,
     title: "Spaanse Linies",
     subtitle: "Verdedigingswerken door de eeuwen heen",
-    heroImage: "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?w=1200&q=80",
+    heroImage: "/bord3-spaanse-linies.png",
     historicImage: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&q=80",
     modernImage: "https://images.unsplash.com/photo-1551524164-687a55dd1126?w=600&q=80",
     content: {
@@ -129,7 +129,7 @@ export const bordenData: InformatieBord[] = [
     id: 4,
     title: "Prins Maurits",
     subtitle: "De landing bij Philippine & het Mauritsfort",
-    heroImage: "https://images.unsplash.com/photo-1565008576549-57569a49371d?w=1200&q=80",
+    heroImage: "/bord4-prins-maurits.png",
     historicImage: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
     modernImage: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=600&q=80",
     content: {
@@ -163,7 +163,7 @@ export const bordenData: InformatieBord[] = [
     id: 5,
     title: "De Vesting van Philippine",
     subtitle: "Van Spaanse schans tot Zeeuwse vestingstad",
-    heroImage: "https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=1200&q=80",
+    heroImage: "/bord5-vesting-philipine.png",
     historicImage: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=600&q=80",
     modernImage: "https://images.unsplash.com/photo-1438032005730-c779502df39b?w=600&q=80",
     content: {

@@ -96,7 +96,19 @@
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-background text-foreground;
+  html {
+    scroll-behavior: smooth;
   }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  /* Focus ring for accessibility, visible on keyboard focus */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
+}
+
+/* Consistent container padding */
+.container {
+  @apply px-4 sm:px-6 lg:px-8;
 }
